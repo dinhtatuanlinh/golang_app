@@ -5,11 +5,9 @@ import (
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/cors"
-	"github.com/google/martian/v3/log"
 	"net/http"
 	"server/database"
 	"server/models"
-
 	//"server/models"
 	"server/web"
 )
@@ -19,7 +17,6 @@ func main() {
 	database.InitDatabase()
 	models.NewUser(db).FindAll()
 	//models.NewUser(db).CreateTable()
-	log.Infof("abcd")
 	r := chi.NewRouter()
 
 	//set cors handler for all routes

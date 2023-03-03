@@ -13,6 +13,7 @@ func Web(r *chi.Mux) {
 	r.Get("/abc/{id}", h.Abc)
 	//r.Post("/register", h.Register)
 	//r.Post("/login", h.Login)
+	r.Get("/video/*", h.Video)
 	r.Post("/uploadfile", h.UploadFile)
 	r.Get("/savefile", h.SaveFile)
 	r.NotFound(h.NotFound)

@@ -6,11 +6,13 @@ import (
 	"github.com/go-chi/chi/v5"
 	"net/http"
 	"os"
+	"path/filepath"
 	"regexp"
 	"server/models"
 	"server/pkg/libs/alias"
 	template "server/templates"
 	"server/validation"
+	"strings"
 )
 
 type Handle interface {
@@ -20,8 +22,9 @@ type Handle interface {
 	Articles(w http.ResponseWriter, r *http.Request)
 	NotFound(w http.ResponseWriter, r *http.Request)
 	Post(w http.ResponseWriter, r *http.Request)
-	Register(w http.ResponseWriter, r *http.Request)
-	Login(w http.ResponseWriter, r *http.Request)
+	Video(w http.ResponseWriter, r *http.Request)
+	//Register(w http.ResponseWriter, r *http.Request)
+	//Login(w http.ResponseWriter, r *http.Request)
 	UploadFile(w http.ResponseWriter, r *http.Request)
 	SaveFile(w http.ResponseWriter, r *http.Request)
 }
@@ -66,6 +69,15 @@ func (h *Handlers) Post(w http.ResponseWriter, r *http.Request) {
 	}
 	w.WriteHeader(404)
 	w.Write(str)
+}
+func (h *Handlers) Video(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("testing....")
+	workDir, _ := os.Getwd()
+	filesDir := http.Dir(filepath.Join(workDir, "songs"))
+	rctx := chi.RouteContext(r.Context())
+	pathPrefix := strings.TrimSuffix(rctx.RoutePattern(), "/*")
+	fs := http.StripPrefix(pathPrefix, http.FileServer(filesDir))
+	fs.ServeHTTP(w, r)
 }
 
 //func (h *Handlers) Register(w http.ResponseWriter, r *http.Request) {
