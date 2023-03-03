@@ -1,0 +1,15 @@
+version: '3.6'
+
+services:
+  database:
+    image: postgres:latest
+    container_name: server_db
+    restart: always
+    environment:
+      POSTGRES_DB: test_server
+      POSTGRES_USER: tester
+      POSTGRES_PASSWORD: password
+    ports:
+      - 3232:5432
+#    volumes:
+#      - ~/AppData/postgres/data:/var/lib/postgresql/data
